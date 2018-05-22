@@ -1,27 +1,35 @@
-from tkinter import *
 
 
 class GPU:
-    def __init__(self, pixel_size):
+    def __init__(self, pixel_size, tkinter):
         self.width = 64
         self.height = 32
         self.pixel_size = pixel_size
-        self.master = Tk()
-        self.window = Canvas(self.master, width=self.width * self.pixel_size, height=self.height * self.pixel_size)
+        try:
+            self.master = tkinter.Tk()
+            self.window = tkinter.Canvas(self.master, width=self.width * self.pixel_size, height=self.height * self.pixel_size)
+        except:
+            pass
         self.pixels = []
         self.memory = []
         for x in range(self.width):
             self.pixels.append([])
             self.memory.append([])
             for y in range(self.height):
-                element = self.window.create_rectangle(x * self.pixel_size, y * self.pixel_size,
+                try:
+                    element = self.window.create_rectangle(x * self.pixel_size, y * self.pixel_size,
                                                        (x + 1) * self.pixel_size, (y + 1) * self.pixel_size,
                                                        fill="black", width=0)
-                self.pixels[x].append(element)
+                    self.pixels[x].append(element)
+                except:
+                    pass
                 self.memory[x].append(0)
 
     def main(self):
-        self.window.pack()
+        try:
+            self.window.pack()
+        except:
+            pass
 
     def clear_screen(self):
         """
@@ -43,7 +51,10 @@ class GPU:
             color = "black"
         else:
             color = "white"
-        self.window.itemconfig(self.pixels[pixel_x][pixel_y], fill=color)
+        try:
+            self.window.itemconfig(self.pixels[pixel_x][pixel_y], fill=color)
+        except:
+            pass
 
     def draw_sprite(self, x, y, sprite):
         """

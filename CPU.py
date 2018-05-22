@@ -4,7 +4,7 @@ from GPU import GPU
 
 
 class CPU:
-    def __init__(self):
+    def __init__(self, tkinter):
         self.memory = [0] * 4096
         self.pause = False
         try:
@@ -15,12 +15,15 @@ class CPU:
                 exit()
         except IndexError:
             pixel_size = 20
-        self.gpu = GPU(pixel_size)
-        self.gpu.master.title("CHIP-8 Emulator")
-        self.gpu.master.bind("<KeyPress>", self.on_key_down)
-        self.gpu.master.bind("<KeyRelease>", self.on_key_up)
-        self.gpu.master.bind("<space>", self.invert_pause)
-        self.gpu.master.bind("<Escape>", self.exit_program)
+        self.gpu = GPU(pixel_size, tkinter)
+        try:
+            self.gpu.master.title("CHIP-8 Emulator")
+            self.gpu.master.bind("<KeyPress>", self.on_key_down)
+            self.gpu.master.bind("<KeyRelease>", self.on_key_up)
+            self.gpu.master.bind("<space>", self.invert_pause)
+            self.gpu.master.bind("<Escape>", self.exit_program)
+        except:
+            pass
         self.pc = 0x200  # Pointer counter
         self.read_instructions()
         self.opcode = 0

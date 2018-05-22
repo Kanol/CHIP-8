@@ -1,5 +1,6 @@
 from CPU import CPU
 import sys
+import tkinter
 
 
 if __name__ == "__main__":
@@ -9,5 +10,5 @@ if __name__ == "__main__":
             exit()
     except IndexError:
         exit()
-    cpu = CPU()
+    cpu = CPU(tkinter)
     cpu.main()

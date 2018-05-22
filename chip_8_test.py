@@ -5,7 +5,13 @@ from CPU import CPU
 class CPUTests(unittest.TestCase):
 
     def setUp(self):
-        self.cpu = CPU()
+        self.cpu = CPU("tkinter")
+
+    def test_00E0(self):
+        self.cpu.opcode = 0x00e0
+        self.cpu.gpu.memory[0][0] = 1
+        self.cpu.execute_opcode()
+        self.assertEqual(self.cpu.gpu.memory[0][0], 0)
 
     def test_00EE(self):
         self.cpu.stack.append(0x1234)
@@ -352,6 +358,14 @@ class CPUTests(unittest.TestCase):
         self.assertEqual(self.cpu.registers[0x2], 1)
         self.assertEqual(self.cpu.registers[0x3], 7)
         self.assertEqual(self.cpu.registers[0x4], 0)
+
+    def test_get_opcode(self):
+        self.cpu.pc = 0x0
+        self.cpu.memory[0x0] = 0x12
+        self.cpu.memory[0x1] = 0x34
+        self.cpu.get_opcode()
+        self.assertEqual(self.cpu.opcode, 0x1234)
+
 
 
 if __name__ == "__main__":
