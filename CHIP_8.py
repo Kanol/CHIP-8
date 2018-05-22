@@ -1,7 +1,7 @@
-from CPU import CPU
 import sys
 import tkinter
 
+from CPU import CPU
 
 if __name__ == "__main__":
     try:

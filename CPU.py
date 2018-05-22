@@ -156,13 +156,17 @@ class CPU:
             filename = sys.argv[1]
         except IndexError:
             return
-        with open(filename, "rb") as game:
-            byte = game.read(1)
-            i = 0
-            while byte:
-                self.memory[self.pc + i] = ord(byte)
+        try:
+            with open(filename, "rb") as game:
                 byte = game.read(1)
-                i += 1
+                i = 0
+                while byte:
+                    self.memory[self.pc + i] = ord(byte)
+                    byte = game.read(1)
+                    i += 1
+        except:
+            pass
+
 
     def get_opcode(self):
         """
